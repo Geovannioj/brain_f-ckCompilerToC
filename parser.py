@@ -1,4 +1,4 @@
-import argparse
+import click
 
 # brain_f*ck tokens
 
@@ -13,3 +13,17 @@ tokens = {
   "]": "}"
 }
 
+#click handle
+@click.command()
+@click.argument('firstUserInput', type = click.File('r'))
+@click.option('-o', type = click.File('w'))
+
+
+def parse():
+
+
+def main():
+
+  
+if __name__ == '__main__':
+    main()
