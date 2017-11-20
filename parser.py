@@ -3,54 +3,45 @@ import click
 # brain_f*ck tokens
 
 tokens = {
-  ">":"++ptr;",
-  "<":"--ptr;",
-  "+":"++*ptr;",
-  "-":"--*ptr;",
-  ".":"putchar(*ptr);",
-  ",":"*ptr =getchar();",
-  "[": "while (*ptr) {",
-  "]": "}"
+	">":"++pointer;",
+  	"<":"--pointer;",
+  	"+":"++*pointer;",
+  	"-":"--*pointer;",
+  	".":"putchar(*pointer);",
+  	",":"*pointer =getchar();",
+  	"[": "while (*pointer) {",
+  	"]": "}"
 }
 
 #click handle
 @click.command()
-@click.argument('firstUserInput', type = click.File('r'))
-@click.option('-o', type = click.File('w'))
+@click.argument('input', type = click.File('r'))
+@click.option('-o', nargs = 1, type = click.File('w'))
 
 
 #parse function
-def parse(firstUserInput, outPutFile):
+def parse(input, o):
 
-  firstPart = """ #include<stdio.h>
-    
-    #define LENGTH 40000
-
-    int main() {
-        
-        static char brain[LENGTH];
-        static char *pointer;
-        pointer = brain; """
-
-    lastPart = """ return 0; 
-    }"""
-
-    middlePart = ""
-
-    brain_fuck_content = firstUserInput.read()
-    
-    for content_item in brain_fuck_content
-        if item in tokens:
-            middlePart += tokens[item]
-
-
-
-    completeFile = firstPart + middlePart + lastPart
-    
-    outPutFile.write(completeFile)
-    outPutFile.flush
-
-
+	firstPart = """ #include<stdio.h>\n
+	#define LENGTH 40000\n
+	int main() {\n
+	\tstatic char brain[LENGTH];\n
+	\tstatic char *pointer;\n
+	\tpointer = brain;\n """
   
+	lastPart = """ \nreturn 0;\n }"""
+	middlePart = "\t"
+  
+	brain_fuck_content = input.read()
+
+	for content in brain_fuck_content:
+		if content in tokens:
+			middlePart += tokens[content]
+	
+
+	complete = firstPart+middlePart+lastPart
+	o.write(complete)
+
+        
 if __name__ == '__main__':
     parse()
